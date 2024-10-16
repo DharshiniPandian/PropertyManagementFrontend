@@ -1,66 +1,63 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Divider, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import TopBar from '../components/Company/TopBar';
 import Img from '../assets/prospect.png'
+import ProspectProfile from '../components/Company/ProspectProfile';
+import Navigator from '../components/Company/Navigator';
+import QuotationDetails from '../components/Company/QuotationDetails';
+import UnitDetails from '../components/Company/UnitDetails';
+import QuotationSummary from '../components/Company/QuotationSummary';
+import Footer from '../components/Company/Footer';
 
 function Company() {
   return (
-    <Box>
+    <Box sx={{ height: '90vh', display: 'flex', flexDirection: 'column' }}>
       <TopBar />
       <Box sx={{
-        width: '1408px',
-        height: '586px',
-        background: '#FFFFFF 0% 0% no-repeat padding-box',
-        boxShadow: '0px 0px 16px #00000014',
-        borderRadius: '12px',
-        m: '25px'
+        pl: '25px',
+        pt:'25px',
+        flexGrow: 1 
       }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', p: 3 }}>
-          <Typography sx={{
-            textAlign: 'left',
-            font: 'normal normal bold 14px/19px Nunito Sans',
-            color: '#4E5A6B',
-            mb: 3
-          }}>Lead Details
-          </Typography>
-          <Box
-            sx={{
-              background: '#FFFFFF',
-              border: '1px solid #E4E8EE',
-              borderRadius: '4px',
-              width: '351px',
-              height: '60px',
-              display: 'flex',
-              p: 0, m: 0
-            }}
-          >
-            <Box sx={{ p: 0, m: 0 }}>
-              <img src={Img} alt="profile" style={{ padding: '0px', margin: '0px' }} />
-            </Box>
-            <Box>
-              <Typography sx={{
-                font: 'normal normal bold 14px/19px Nunito Sans',
-                letterSpacing: '-0.11px',
-                color: '#091B29',
-                display: 'flex',
-                alignItems: 'center'
-              }}>Tom Cruise <Box sx={{
-                background: '#5078E11E 0% 0% no-repeat padding-box',
-                borderRadius: '4px', p: 1, ml: 1
-              }}><Typography sx={{
-                font: 'normal normal bold 10px/14px Nunito Sans',
-                letterSpacing: '-0.08px',
-                color: '#091B29'
-              }}>Prospect</Typography></Box></Typography>
+        <Stack sx={{
+          width: '100%',
+          height: '100%',
+          background: '#FFFFFF 0% 0% no-repeat padding-box',
+          boxShadow: '0px 0px 16px #00000014',
+          borderRadius: '12px',
+        }}>
+          <Box sx={{ flex: 1 }}>
+          <Navigator />
+          <Divider
+                flexItem
+                sx={{
+                  borderColor: '#F5F7FA',
+                  borderWidth: '1px',
+                }}
+              />
+              </Box>
+          <Box  sx={{ display: 'flex', flexDirection: 'row', flex: 10 }}>
+          <Box sx={{flex: 1 }}> 
+          <ProspectProfile />
+              <QuotationDetails />
+          </Box>
+          <Box flex={2} sx={{backgroundColor:'#f6f8fa'}}> 
+          <UnitDetails />
             </Box>
 
-          </Box>
+            <Box>  
+          <QuotationSummary />
+            </Box>
+
+        </Box>
+        <Box sx={{ flexShrink: 0, mb:1 }} >
+        <Footer /></Box>
+      </Stack>
         </Box>
 
-      </Box>
 
-    </Box>
-  )
+      </Box >
+      )
 }
 
-export default Company
+      export default Company
+

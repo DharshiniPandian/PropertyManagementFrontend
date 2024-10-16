@@ -114,9 +114,7 @@ function SideNav({ open, handleDrawerOpen, handleDrawerClose }) {
               variant="middle"
               flexItem
               sx={{
-                mx: 2,
-                borderColor: '#4E5A6B',
-                borderWidth: '1px',
+                mx: 2, borderColor: '#E4E8EE', borderWidth: '1px',
               }}
             />
 

@@ -81,7 +81,7 @@ export default function Profile() {
       };
 
     return (
-        <div>
+        <Box>
             <Button
                 id="demo-customized-button"
                 aria-controls={open ? 'demo-customized-menu' : undefined}
@@ -159,6 +159,6 @@ export default function Profile() {
                     More
                 </MenuItem>
             </StyledMenu>
-        </div>
+        </Box>
     );
 }
