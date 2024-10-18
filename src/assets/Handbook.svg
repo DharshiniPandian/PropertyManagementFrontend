@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="13.808" height="17" viewBox="0 0 13.808 17">
+  <g id="Handbook" transform="translate(0.5 0.5)">
+    <g id="Group_4046" data-name="Group 4046">
+      <g id="Group_4045" data-name="Group 4045">
+        <g id="Group_4044" data-name="Group 4044" transform="translate(0)">
+          <g id="Group_4043" data-name="Group 4043" transform="translate(0)">
+            <path id="icons8-book" d="M9.788,4a1.809,1.809,0,0,0-1.8,1.8V17.3a.6.6,0,0,0,0,.195v.7a1.809,1.809,0,0,0,1.8,1.8h10.4a.6.6,0,1,0,0-1.2H9.788a.591.591,0,0,1-.6-.6V18h11a.6.6,0,0,0,.6-.6V5.8a1.809,1.809,0,0,0-1.8-1.8Zm0,1.2h9.2a.591.591,0,0,1,.6.6v11H9.188V5.8A.591.591,0,0,1,9.788,5.2Z" transform="translate(-7.98 -4)" fill="#4e5a6b" stroke="rgba(0,0,0,0)" stroke-width="1"/>
+            <path id="icons8-book-2" data-name="icons8-book" d="M11.387,7.5a.6.6,0,1,0,0,1.2h5.2a.6.6,0,1,0,0-1.2Z" transform="translate(-7.359 -3.5)" fill="#ced3dd"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

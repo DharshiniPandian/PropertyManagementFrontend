@@ -14,8 +14,7 @@ function Company() {
     <Box sx={{ height: '90vh', display: 'flex', flexDirection: 'column' }}>
       <TopBar />
       <Box sx={{
-        pl: '25px',
-        pt:'25px',
+        p: '25px',
         flexGrow: 1 
       }}>
         <Stack sx={{
@@ -44,7 +43,7 @@ function Company() {
           <UnitDetails />
             </Box>
 
-            <Box>  
+            <Box sx={{flex: 1 }}>  
           <QuotationSummary />
             </Box>
 

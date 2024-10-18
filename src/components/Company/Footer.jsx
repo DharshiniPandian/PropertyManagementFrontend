@@ -3,7 +3,7 @@ import React from 'react'
 
 function Footer() {
   return (
-   <Box sx={{p:'17px', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+   <Box sx={{p:'17px', display:'flex', justifyContent:'space-between', alignItems:'center', height:'45px'}}>
       <Box>
         <Button variant='outline' sx={{font: 'normal normal bold 14px/19px Nunito Sans', color: '#091B29', border: '1px solid #E4E8EE',borderRadius: '8px', textTransform:'none', height:'40px'}}>Previous</Button>
       </Box>

@@ -4,8 +4,10 @@ import { CssBaseline } from '@mui/material';
 import App from './App.jsx'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import theme from './Theme.jsx'
+import { store } from "./store/store.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Company from "./pages/Company.jsx";
+import { Provider } from "react-redux";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,7 +27,9 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <ThemeProvider theme={theme}>
+      <Provider store={store}>
      <RouterProvider router={router} />
+     </Provider>
   </ThemeProvider>
 
 )
