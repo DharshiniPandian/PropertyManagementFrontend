@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import {Divider} from '@mui/material';
 import React from 'react';
 
 function QuotationSummary() {
@@ -58,13 +59,13 @@ function QuotationSummary() {
                   <TableCell component="th" scope="row" sx={{ font: 'normal normal 600 14px/19px Nunito Sans', color: '#4E5A6B' }}>
                     {row.name}
                   </TableCell>
-                  <TableCell align="right" sx={{ font: 'normal normal 600 14px/19px Nunito Sans', color: '#4E5A6B' }}>{row.calories}</TableCell>
-                  <TableCell align="right" sx={{ font: 'normal normal 600 14px/19px Nunito Sans', color: '#4E5A6B' }}>{row.fat}</TableCell>
+                  <TableCell align="right" sx={{ font: 'normal normal 600 14px/19px Nunito Sans', color: '#091B29' }}>{row.calories}</TableCell>
+                  <TableCell align="right" sx={{ font: 'normal normal bold 14px/19px Nunito Sans', color: '#091B29' }}>{row.fat}</TableCell>
                 </TableRow>
               ))}
 
               
-              <TableRow
+              {/* <TableRow
                 sx={{
                   '& td, & th': {
                     borderBottom: 0,
@@ -83,10 +84,24 @@ function QuotationSummary() {
                 </TableCell>
                 <TableCell align="right" sx={{ font: 'normal normal 600 14px/19px Nunito Sans', color: '#091B29' }}></TableCell>
                 <TableCell align="right" sx={{ font: 'normal normal bold 14px/19px Nunito Sans',color: '#091B29' }}>50.0</TableCell>
-              </TableRow>
+              </TableRow> */}
             </TableBody>
           </Table>
         </TableContainer>
+<Box>
+<Divider
+                flexItem
+                sx={{
+                  borderColor: '#E4E8EE',
+                  borderWidth: '1px',
+                }}
+              />
+
+        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', p:'17px'}}>
+          <Typography sx={{ont: 'normal normal bold 14px/19px Nunito Sans', color: '#091B29'}}>Quote Amount</Typography>
+          <Typography sx={{ont: 'normal normal bold 14px/19px Nunito Sans', color: '#091B29'}}>$4,148.00</Typography>
+        </Box>
+        </Box>
       </Box>
     </Box>
   );

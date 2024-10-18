@@ -22,7 +22,7 @@ function UnitDetails() {
 
   return (
     <Box sx={{p:'17px'}}>
-        <Typography sx={{font: 'normal normal bold 14px/19px Nunito Sans',color: '#4E5A6B', mb:2}}>Unit Details</Typography>
+        <Typography sx={{font: 'normal normal bold 14px/19px Nunito Sans',color: '#4E5A6B', mb:3}}>Unit Details</Typography>
        {units.length>0 && <UnitCard units={units} /> }
     </Box>
   )
