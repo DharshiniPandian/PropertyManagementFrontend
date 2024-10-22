@@ -16,6 +16,9 @@ import PricingComponentPopup from './PricingComponentPopup';
 import AmenityPopup from './AmenityPopup';
 import UtilityPopup from './UtilityPopup';
 import UnitDetailsPopup from './UnitDetailsPopup';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeUnit } from '../../slice/QuoteSlice';
+import { removeMasterUnit } from '../../slice/MasterSlice';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -40,18 +43,31 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-function UnitCard({ units }) {
+function UnitCard() {
+  const dispatch = useDispatch()
   const [value, setValue] = useState(0)
   const [clicked, setClicked] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [id, setId] = useState(null)
   const open = Boolean(anchorEl);
+  const [selectedUnit, setSelectedUnit] = useState(null);
+  const [number, setNumber] = useState(1)
+
+
+  const units = useSelector((s) => s.masterunit)
+
 
   const [openUnitDetails, setOpenUnitDetails] = useState(false)
-  const handleOpenUnitDetails = (unit) => {
+
+  const handleOpenUnitDetails = (unit, txt) => {
+    console.log("open unit details")
+    console.log(unit)
+    if(txt === "Main") {setNumber(1); setId(unit.id)}
+    else if(txt==="Discount") {setNumber(2);  setId(selectedUnit.id)}
+    else if(txt==="Remove") {setNumber(3);  setId(selectedUnit.id)}
     setOpenUnitDetails(true)
-    setId(unit.id)
   }
+
   const handleCloseUnitDetails = (unit) => {
     setOpenUnitDetails(false)
   }
@@ -59,7 +75,8 @@ function UnitCard({ units }) {
   const [openAmenity, setOpenAmenity] = useState(false)
   const handleOpenAmenity = (unit) => {
     setOpenAmenity(true)
-    setId(unit.id)
+    console.log(selectedUnit)
+    setId(selectedUnit.id)
   }
   const handleCloseAmenity = (unit) => {
     setOpenAmenity(false)
@@ -67,22 +84,23 @@ function UnitCard({ units }) {
 
   const [openUtility, setOpenUtility] = useState(false)
   const handleOpenUtility = (unit) => {
-    setOpenUtility(true)
-    setId(unit.id)
+    console.log(unit)
+    setOpenUtility(true) 
+    setId(selectedUnit.id)
   }
   const handleCloseUtility = (unit) => {
     setOpenUtility(false)
   }
 
   const [openPricingPopup, setOpenPricingPopup] = React.useState(false);
-  const handleOpenPricingPopup = (unit) => {
+  const handleOpenPricingPopup = () => {
+    setId(selectedUnit.id)
     setOpenPricingPopup(true)
-    console.log(unit.id)
   }
   const handleClosePricingPopup = () => setOpenPricingPopup(false);
 
   const handleClick = (event) => {
-    event.stopPropagation();
+    
     setAnchorEl(event.currentTarget);
     console.log('Anchor Element:', anchorEl);
 
@@ -97,6 +115,13 @@ function UnitCard({ units }) {
     setClicked(true);
     handleClick(event); 
   };
+
+  const deleteUnit = (unit) => {
+    console.log(unit)
+     dispatch(removeUnit(unit.id))
+     dispatch(removeMasterUnit(unit.id))
+     console.log("clicked")
+  }
   
   return (
   <Box sx={{ overflowY: 'auto', height: '54vh', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none' } }}>
@@ -117,7 +142,7 @@ function UnitCard({ units }) {
       cursor: 'pointer'
     }}
    >
-      <Box sx={{ position: 'relative', mb: 2 }}  onClick={() => handleOpenUnitDetails(unit)}>
+      <Box sx={{ position: 'relative', mb: 2 }}>
         <Box
           sx={{
             backgroundImage: `url(${unit.path_of_thumbnail})`,
@@ -126,6 +151,7 @@ function UnitCard({ units }) {
             height: '100px',
             borderRadius: '4px',
           }}
+          onClick={() => {handleOpenUnitDetails(unit, "Main");setSelectedUnit(unit)}}
         />
         <Badge
           badgeContent={
@@ -137,6 +163,7 @@ function UnitCard({ units }) {
                 borderRadius: '50%',
                 padding:'4px'
               }}
+              onClick={() => deleteUnit(unit)}
             />
           }
           sx={{
@@ -147,18 +174,18 @@ function UnitCard({ units }) {
         />
       </Box>
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}  onClick={() => handleOpenUnitDetails(unit)}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}  onClick={() => {handleOpenUnitDetails(unit, "Main");setSelectedUnit(unit)}}>
         <Typography sx={{ font: 'normal normal bold 14px/19px Nunito Sans', letterSpacing: '0px', color: '#091B29' }}>{unit.unit_name}</Typography>
         <Typography sx={{ font: 'normal normal bold 14px/19px Nunito Sans', color: '#FF9340' }}>$ {unit.price}</Typography>
       </Box>
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: '6px' }}  onClick={() => handleOpenUnitDetails(unit)}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: '6px' }}  onClick={() => {handleOpenUnitDetails(unit , "Main");setSelectedUnit(unit)}}>
         <Typography sx={{ font: 'normal normal normal 12px/16px Nunito Sans', color: '#98A0AC' }}>{unit.unit_description}</Typography>
         <Box sx={{ background: '#CED3DD 0% 0% no-repeat padding-box', borderRadius: '50%', height: '6px', width: '6px' }}></Box>
         <Typography sx={{ font: 'normal normal normal 12px/16px Nunito Sans', color: '#98A0AC' }}>{unit.area} Sq.Ft</Typography>
       </Box>
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: '12px' }}  onClick={() => handleOpenUnitDetails(unit)}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: '12px' }}  onClick={() => {handleOpenUnitDetails(unit, "Main");;setSelectedUnit(unit)}}>
         <Box sx={{ display: 'flex', gap: '7px', alignItems: 'center', verticalAlign: 'center' }}>
           <GiPersonInBed color='#98A0AC' size='20px' style={{ marginBottom: '5px' }} />
           <Typography sx={{ font: 'normal normal normal 14px/19px Nunito Sans', color: '#98A0AC' }}>{unit.bedroom_count}</Typography></Box>
@@ -172,7 +199,7 @@ function UnitCard({ units }) {
         </Box>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 2 }}>
-        <Button variant="text" startIcon={<AddIcon />} sx={{ font: 'normal normal 600 12px/16px Nunito Sans', color: '#5078E1', textTransform: 'none' }} onClick={(event) => {event.stopPropagation(); handleButtonClick(event);}}>Customize</Button>
+        <Button variant="text" startIcon={<AddIcon />} sx={{ font: 'normal normal 600 12px/16px Nunito Sans', color: '#5078E1', textTransform: 'none' }} onClick={(event) => { handleButtonClick(event);setSelectedUnit(unit)}}>Customize</Button>
       </Box>
       <StyledMenu
                 id="demo-customized-menu"
@@ -183,36 +210,36 @@ function UnitCard({ units }) {
                 open={open}
                 onClose={handleClose}
             >
-                <MenuItem onClick={(event) => {event.stopPropagation();handleOpenPricingPopup(unit)}} disableRipple sx={{ font: 'normal normal 600 12px/16px Nunito Sans',color: '#4E5A6B'}}>
+                <MenuItem onClick={handleOpenPricingPopup} disableRipple sx={{ font: 'normal normal 600 12px/16px Nunito Sans',color: '#4E5A6B'}}>
                     
                     Add Pricing Component
                 </MenuItem>
                 <Divider sx={{  mx: 2, borderColor: '#E4E8EE', borderWidth: '1px', }} />
-                <MenuItem onClick={(event) => {event.stopPropagation();handleOpenAmenity(unit)}} disableRipple sx={{ font: 'normal normal 600 12px/16px Nunito Sans', color: '#4E5A6B',}}>
+                <MenuItem onClick={() => {handleOpenAmenity(unit)}} disableRipple sx={{ font: 'normal normal 600 12px/16px Nunito Sans', color: '#4E5A6B',}}>
                    
                     Add Amenities
                 </MenuItem>
                 <Divider sx={{  mx: 2, borderColor: '#E4E8EE', borderWidth: '1px', }} />
-                <MenuItem onClick={(event) => {event.stopPropagation();handleOpenUtility(unit)}} disableRipple sx={{font: 'normal normal 600 12px/16px Nunito Sans',color: '#4E5A6B',}}>
+                <MenuItem onClick={() => {handleOpenUtility(unit)}} disableRipple sx={{font: 'normal normal 600 12px/16px Nunito Sans',color: '#4E5A6B',}}>
                   
                     Add Utilities
                 </MenuItem>
                 <Divider sx={{  mx: 2, borderColor: '#E4E8EE', borderWidth: '1px', }} />
-                <MenuItem onClick={handleClose} disableRipple sx={{font: 'normal normal 600 12px/16px Nunito Sans',color: '#4E5A6B',}}>
+                <MenuItem onClick={() => handleOpenUnitDetails(unit, "Discount")} disableRipple sx={{font: 'normal normal 600 12px/16px Nunito Sans',color: '#4E5A6B',}}>
                   
                     Add Discount
                 </MenuItem>
                 <Divider sx={{  mx: 2, borderColor: '#E4E8EE', borderWidth: '1px', }} />
-                <MenuItem onClick={handleClose} disableRipple sx={{font: 'normal normal 600 12px/16px Nunito Sans',color: '#4E5A6B',}}>
+                <MenuItem onClick={() => handleOpenUnitDetails(unit, "Remove")} disableRipple sx={{font: 'normal normal 600 12px/16px Nunito Sans',color: '#4E5A6B',}}>
                   
                     Remove Component
                 </MenuItem>
 
             </StyledMenu>
-            {openPricingPopup && <PricingComponentPopup open={openPricingPopup} handleClose={handleClosePricingPopup} value={value} setValue={setValue} />}
+            {openPricingPopup && <PricingComponentPopup id={id} open={openPricingPopup} handleClose={handleClosePricingPopup} value={value} setValue={setValue} />}
             {openAmenity && <AmenityPopup id={id} open={openAmenity} handleClose={handleCloseAmenity} />}
             {openUtility && <UtilityPopup id={id} open={openUtility} handleClose={handleCloseUtility} />}
-            {openUnitDetails && <UnitDetailsPopup id={id} handleClose={handleCloseUnitDetails} />}
+            {openUnitDetails && <UnitDetailsPopup id={id} handleClose={handleCloseUnitDetails} val={number} />}
     </Box>
     ))}
     </Stack>

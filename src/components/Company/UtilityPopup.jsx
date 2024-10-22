@@ -14,6 +14,10 @@ import { Switch } from '@mui/material';
 import { height, styled } from '@mui/system';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux'
+import {addAddon} from '../../slice/QuoteSlice'
+import { addMasterUtility } from '../../slice/MasterSlice';
+import { useSelector } from 'react-redux';
 
 const CustomSwitch = styled(Switch)(({ theme }) => ({
     width: 62, // Set the width of the switch
@@ -70,20 +74,83 @@ const CustomSwitch = styled(Switch)(({ theme }) => ({
   };
 
 function UtilityPopup({ open, id, handleClose }) {
+    const [selectedUtilities, setSelectedUtilities] = useState([])
+    const [count, setCount] = useState(0)
+    const [price, setPrice] = useState(0)
     const [utility, setUtility] = useState([])
+    const dispatch = useDispatch()
+
+    const previousUtilities = useSelector((state) =>
+        state.quote.quoted_units.find((unit) => unit.unit_id === id) ?.addons || []
+    )
+
     const fetchUtilities = async () => {
         try{
             const response = await axios.get(`http://localhost:8081/unit/utility/${id}`)
             setUtility(response.data)
             console.log(response.data)
+            dispatch(addMasterUtility(response.data))
         } catch (error){
             console.log("error fetching the data", error);
         }
     }
 
+    const handleSwitchChange = (util) => {
+        setSelectedUtilities((prev) => {
+            const newUtility = !prev[util.utility.id];
+            if(newUtility){
+                setCount((count) => count+1)
+                setPrice((price) => price+parseFloat(util.price))
+            } else{
+                setCount((count) => count-1)
+                setPrice((price) => price-parseFloat(util.price))
+            }
+            return{
+                ...prev,
+                [util.utility.id]: !prev[util.utility.id]
+            }
+        })
+    }
+
+    const handleUpdateAndSave = async () => {
+        const dataToSave = Object.entries(selectedUtilities)
+                .filter(([_, isSelected]) => isSelected)
+                .map(([utilityId]) => {
+                    const selectedUtility = utility.find((item) => item.utility.id === parseInt(utilityId));
+                return {
+                    amenity_id: null,
+                    utility_id: utilityId,
+                    discount_type: 'Value', 
+                    discount_value: 0, 
+                    price: selectedUtility ? selectedUtility.price : null,
+                    name:  selectedUtility && selectedUtility.utility ? selectedUtility.utility.utility_name : null
+
+                }})
+
+                const payload = {
+                    id,
+                    addon: dataToSave
+                }
+
+                dispatch(addAddon(payload))
+
+                handleClose()
+    }
+
     useEffect(() => {
         fetchUtilities();
-    }, [])
+        previousUtilities.forEach((prev) => {
+       
+            setSelectedUtilities((prevSelected) => ({
+              ...prevSelected,
+              [prev.utility_id]: true,
+            
+            }));
+            prev.utility_id!==null && setCount(count => count+1)
+            prev.utility_id!==null && setPrice(price => price+parseFloat(prev.price))
+          });
+    }, [id])
+
   return (
     <div>
             <Modal
@@ -106,14 +173,14 @@ function UtilityPopup({ open, id, handleClose }) {
                             <Box sx={{ background: '#DBF0F180 0% 0% no-repeat padding-box', borderRadius: '4px', height: '50px', display: 'flex', alignItems: 'center', p: '5px', justifyContent: 'space-between' }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
                                     <img src={Img} height='40px' />
-                                    <Typography sx={{ font: 'normal normal 600 16px/22px Nunito Sans', color: '#6DAFB3', display: 'flex' }}><Box sx={{ fontWeight: 800, mr: '5px' }}>{2 * 2}</Box> Total Utility</Typography>
+                                    <Typography sx={{ font: 'normal normal 600 16px/22px Nunito Sans', color: '#6DAFB3', display: 'flex' }}><Box sx={{ fontWeight: 800, mr: '5px' }}>{count}</Box> Total Utility</Typography>
                                 </Box>
-                                <Typography sx={{ font: 'normal normal bold 16px/22px Nunito Sans', color: '#6DAFB3' }}>$ {200.00}</Typography>
+                                <Typography sx={{ font: 'normal normal bold 16px/22px Nunito Sans', color: '#6DAFB3' }}>$ {price.toFixed(2)}</Typography>
                             </Box>
                         </Box>
                         <Box sx={{ pl: '17px', mt:'15px', pr: '17px' }}>
                             <Typography sx={{ font: 'normal normal 600 14px/19px Nunito Sans', color: '#98A0AC', mb: '12px' }}>Available Utility</Typography>
-                            <Box sx={{ overflowY: 'auto',height:'55vh', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none' } }}>
+                            <Box sx={{ overflowY: 'auto',height:'51vh', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none' } }}>
                                 {utility.map((util, index) => (
                                 <Box sx={{ background: '#FFFFFF 0% 0% no-repeat padding-box', borderRadius: '6px', border: '1px solid #E4E8EE', height: '55px', p: '3px', display: 'flex', alignItems: 'center', justifyContent:'space-between',mb:'10px'}}>
                                     <Box sx={{display:'flex', alignItems:'center', gap:'2px'}}>
@@ -128,8 +195,8 @@ function UtilityPopup({ open, id, handleClose }) {
                                     </Box>
                                     </Box>
                                     <CustomSwitch
-                                        // checked={checked}
-                                        // onChange={handleChange}
+                                        checked={selectedUtilities[util.utility.id]}
+                                        onChange={() => handleSwitchChange(util)}
                                         inputProps={{ 'aria-label': 'controlled' }}
                                     />
                                 </Box>
@@ -137,7 +204,7 @@ function UtilityPopup({ open, id, handleClose }) {
                             </Box>
                         </Box>
                         <Box sx={{ pl: '17px', pt: '17px', pr: '17px' }}>
-                            <Button variant='contained' sx={{font: 'normal normal bold 14px/19px Nunito Sans', color: '#FFFFFF', height:'20px', width:'100%',background: '#5078E1 0% 0% no-repeat padding-box', borderRadius:'4px', height:'40px'}}>Update & Save</Button>
+                            <Button variant='contained' sx={{font: 'normal normal bold 14px/19px Nunito Sans', color: '#FFFFFF', height:'20px', width:'100%',background: '#5078E1 0% 0% no-repeat padding-box', borderRadius:'4px', height:'40px'}} onClick={handleUpdateAndSave}>Update & Save</Button>
                         </Box>
                     </Box>
                 </Box>
