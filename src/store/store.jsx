@@ -1,28 +1,14 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-// import {
-//   MasterVehicleFuelTypeReducer,
-//   MasterVehicleReducer,
-//   MasterFoodItemsReducer,
-//   MasterAppliancesReducer
-// } from "../slice/MasterApiSlices";
-// import { CalcEmissionReducer } from "../slice/CalculationSlice";
-// import { TransactionReducer } from "../slice/TransactionSlice";
-// import UserReducer from "../slice/UserSlice";
+import { QuoteReducer } from  "../slice/QuoteSlice"
+import { MasterAmenityReducer, MasterUtilityReducer, MasterUnitReducer } from "../slice/MasterSlice";
 
-// Combine your reducers
-// const rootReducer = combineReducers({
-//   masterVehicles: MasterVehicleReducer,
-//   masterFoodItems: MasterFoodItemsReducer,
-//   masterAppliances: MasterAppliancesReducer,
-//   carbonValue: CalcEmissionReducer,
-//   transactionData: TransactionReducer,
-//   masterVehicleFuelType: MasterVehicleFuelTypeReducer,
-//   user: UserReducer
-// });
-
-// Create the store without persisting the state
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    quote: QuoteReducer,
+    masterAmenity: MasterAmenityReducer,
+    masterUtility: MasterUtilityReducer,
+    masterunit: MasterUnitReducer
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

@@ -8,6 +8,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import Divider from '@mui/material/Divider';
 import { useState } from 'react';
+import { useSelector } from "react-redux";
 import CustomizationPopup from './CustomizationPopup';
 import { GrHomeRounded } from "react-icons/gr";
 import { GiPersonInBed } from "react-icons/gi";
@@ -15,14 +16,16 @@ import { TbBath } from "react-icons/tb";
 import { BiArea } from "react-icons/bi";
 import Img from '../../assets/Handbook.svg'
 import { Stack } from '@mui/material';
+import UnitPhotos from './UnitPhotos';
+import BillPopup from './BillPopup';
 
 const style = {
     position: "absolute",
     top: "50%",
     left: "50%",  // Adjusted to center the modal
     transform: "translate(-50%, -50%)",
-    width: "70%", // Maximum width for smaller screens
-    height: "85%",
+    width: "65%", // Maximum width for smaller screens
+    height: "88%",
     bgcolor: "white",
     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
     display: 'flex',
@@ -33,7 +36,21 @@ const style = {
     border: 'none'
 };
 
-function UnitDetailsPopup({ id, handleClose }) {
+function UnitDetailsPopup({ id, handleClose, val }) {
+    // console.log(id)
+    const units = useSelector((s) => s.masterunit)
+    // console.log(units)
+    const unit = units.find((uni) => uni.id===id)
+    
+    const data = useSelector((s) => s.quote)
+    // if (data && data.quoted_units) {
+    //     console.log(data)
+    //     const unit = data.quoted_units.filter((uni, index) => uni.unit_id === id)
+    //     console.log(unit)
+    // }
+    // const addons = unit.addons
+
+
     return (
         <div>
             <Modal
@@ -53,36 +70,39 @@ function UnitDetailsPopup({ id, handleClose }) {
                     </Box>
 
                     <Box sx={{ pl: '22px', pr: '22px' }}>
-                        <Stack sx={{ gap:'20px' }} direction='row'>
-                            <Box flex={1}>
+                        <Stack sx={{ gap: '20px' }} direction='row'>
+                            <Box sx={{width:'382px'}}>
+                                <Box>
+                                    <UnitPhotos />
+                                </Box>
                                 <Box>
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                                        <Typography sx={{ font: 'normal normal bold 18px/24px Nunito Sans', color: '#091B29' }}>Jumeirah Estate</Typography>
-                                        <Box sx={{ p: '2px', background: '#F5F7FA 0% 0% no-repeat padding-box', borderRadius: '4px' }}><Typography sx={{ font: 'normal normal bold 12px/16px Nunito Sans', letterSpacing: '-0.1px', color: '#98A0AC' }}>UNT-1234</Typography></Box>
+                                        <Typography sx={{ font: 'normal normal bold 18px/24px Nunito Sans', color: '#091B29' }}>{unit.unit_name}</Typography>
+                                        <Box sx={{ p: '2px', background: '#F5F7FA 0% 0% no-repeat padding-box', borderRadius: '4px' }}><Typography sx={{ font: 'normal normal bold 12px/16px Nunito Sans', letterSpacing: '-0.1px', color: '#98A0AC' }}>UNT-{unit.unit_no}</Typography></Box>
                                     </Box>
                                 </Box>
 
                                 <Box sx={{ mt: '8px' }}>
-                                    <Typography sx={{ font: 'normal normal normal 14px/19px Nunito Sans', color: '#4E5A6B' }}>Rubix Apartment, K Tower, Floor 1</Typography>
+                                    <Typography sx={{ font: 'normal normal normal 14px/19px Nunito Sans', color: '#4E5A6B' }}>{unit.address}</Typography>
                                 </Box>
 
                                 <Box>
                                     <Box sx={{ display: 'flex', gap: '15px', alignItems: 'center', mt: '12px' }} onClick={() => handleOpenUnitDetails(unit)}>
                                         <Box sx={{ display: 'flex', gap: '7px', alignItems: 'center', verticalAlign: 'center' }}>
                                             <GiPersonInBed color='#98A0AC' size='20px' style={{ marginBottom: '5px' }} />
-                                            <Typography sx={{ font: 'normal normal normal 14px/19px Nunito Sans', color: '#98A0AC' }}>{5}</Typography></Box>
+                                            <Typography sx={{ font: 'normal normal normal 14px/19px Nunito Sans', color: '#98A0AC' }}>{unit.bedroom_count}</Typography></Box>
                                         <Box sx={{ background: '#CED3DD 0% 0% no-repeat padding-box', borderRadius: '50%', height: '8px', width: '8px' }}></Box>
                                         <Box sx={{ display: 'flex', gap: '7px', alignItems: 'center' }}>
                                             <TbBath color='#98A0AC' size='20px' />
-                                            <Typography sx={{ font: 'normal normal normal 14px/19px Nunito Sans', color: '#98A0AC' }}>{20}</Typography></Box>
+                                            <Typography sx={{ font: 'normal normal normal 14px/19px Nunito Sans', color: '#98A0AC' }}>{unit.bath_count}</Typography></Box>
                                         <Box sx={{ background: '#CED3DD 0% 0% no-repeat padding-box', borderRadius: '50%', height: '8px', width: '8px' }}></Box>
                                         <Box sx={{ display: 'flex', gap: '7px', alignItems: 'center' }}><GrHomeRounded color='#98A0AC' size='16px' />
-                                            <Typography sx={{ font: 'normal normal normal 14px/19px Nunito Sans', color: '#98A0AC' }}>{3}BHK</Typography>
+                                            <Typography sx={{ font: 'normal normal normal 14px/19px Nunito Sans', color: '#98A0AC' }}>{unit.house_type}BHK</Typography>
                                         </Box>
                                         <Box sx={{ background: '#CED3DD 0% 0% no-repeat padding-box', borderRadius: '50%', height: '8px', width: '8px' }}></Box>
                                         <Box sx={{ display: 'flex', gap: '7px', alignItems: 'center' }}>
                                             <BiArea color='#98A0AC' size='20px' />
-                                            <Typography sx={{ font: 'normal normal normal 14px/19px Nunito Sans', color: '#98A0AC' }}>{20}</Typography></Box>
+                                            <Typography sx={{ font: 'normal normal normal 14px/19px Nunito Sans', color: '#98A0AC' }}>{unit.area}</Typography></Box>
                                     </Box>
                                 </Box>
 
@@ -96,19 +116,8 @@ function UnitDetailsPopup({ id, handleClose }) {
                                     <Typography sx={{ font: 'normal normal 600 14px/19px Nunito Sans', color: '#5078E1' }}>View / Download</Typography>
                                 </Box>
                             </Box>
-                            <Box sx={{background: '#F8F9FB 0% 0% no-repeat padding-box', borderRadius: '16px', height:'',width:'100%',p:'10px'}} flex={1}>
-                                <Typography sx={{font: 'normal normal bold 14px/19px Nunito Sans', color:'#091B29'}}>UNIT PRICING DETAILS</Typography>
-                                <Box sx={{mt:1}}>
-                                    <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between',mb:'8px'}}>
-                                        <Typography sx={{font: 'normal normal 600 14px/19px Nunito Sans',color: '#4E5A6B', textAlign: 'left'}}>Bill Name Here</Typography>
-                                        <Typography sx={{font: 'normal normal bold 14px/19px Nunito Sans',color: '#4E5A6B', textAlign:'right'}}>$1,000</Typography>
-                                    </Box>
-                                    <Box  sx={{display:'flex', alignItems:'center', justifyContent:'space-between',mb:'8px'}}>
-                                         <Typography sx={{font: 'italic normal normal 14px/19px Nunito Sans', color: '#98A0AC', textAlign:'left'}}>Discount</Typography>
-                                         <Typography sx={{font: 'italic normal 600 12px/16px Nunito Sans', color: '#98A0AC', textAlign:'right'}}>10%</Typography>
-                                    </Box>
-                                    <Divider sx={{ borderColor: '#E4E8EE', borderWidth: '1px', mt: '15px' }} />
-                                </Box>  
+                            <Box sx={{width:'430px',p:'10px'}} flex={2} >
+                                           <BillPopup id={id} handleClose={handleClose} val={val} />
                             </Box>
                         </Stack>
                     </Box>

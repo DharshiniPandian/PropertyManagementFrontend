@@ -12,13 +12,6 @@ function TopBar() {
     const handleChange = (e) => {
       const value = e.target.value;
       setSelectedValue(value);
-  
-      if (value === "goal") {
-        setsidecondition(true);
-        setSelectedValue("new")
-      } else {
-        setsidecondition(false);
-      }
     };
   return (
     <Box>

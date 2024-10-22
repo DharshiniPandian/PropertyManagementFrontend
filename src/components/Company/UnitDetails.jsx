@@ -3,12 +3,17 @@ import React, { useEffect, useState } from 'react'
 import UnitCard from './UnitCard'
 import { Box, Typography } from '@mui/material'
 import Img from '../../assets/prospect.png'
+import { useDispatch } from 'react-redux'
+import { addMasterUnit } from '../../slice/MasterSlice';
 
 function UnitDetails() {
     const [units, setUnits] = useState([])
+    const dispatch = useDispatch()
+
     const fetchunits = async () => {
         try{
             const response = await axios.get('http://localhost:8081/master/units')
+            dispatch(addMasterUnit(response.data))
             setUnits(response.data)
             console.log(units)
         } catch (error){

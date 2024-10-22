@@ -20,14 +20,15 @@ const style = {
     bgcolor: "white",
     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
     display:'flex',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     flexDirection: 'column',
     // p: 4,
     borderRadius: "4px",
     // overflowY: "auto",
 };
 
-function PricingComponentPopup({ open, handleClose, value, setValue }) {
+function PricingComponentPopup({id, open, handleClose, value, setValue }) {
+    console.log(id)
     return (
         <div>
             <Modal
@@ -41,12 +42,12 @@ function PricingComponentPopup({ open, handleClose, value, setValue }) {
                     <Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between',ml:'22px', mr:'22px',mt:2 }}>
                         <Typography sx={{ font: 'normal normal 800 16px/22px Nunito Sans', color: '#091B29' }}>Pricing Table</Typography>
-                        <CloseIcon sx={{ color: '#7C8594', height: '26px', cursor: 'pointer' }} onClick={handleClose} />
+                        <CloseIcon sx={{ color: '#7C8594', height: '26px', cursor: 'pointer' }} onClick={() => {handleClose(); setValue(null)}} />
                     </Box>
-                    <Divider sx={{  borderColor: '#E4E8EE', borderWidth: '1px',mt:'15px' }} />
+                    <Divider sx={{  borderColor: '#E4E8EE', borderWidth: '1px',mt:'15px',mb:'8px' }} />
                     </Box>
-                    <Box sx={{display:'flex', flexDirection:'column', justifyContent:'space-between', gap:'10px'}}>
-                    {(!value || value===1) && (<Box sx={{ height: '55px', background: '#FEEAEA80 0% 0% no-repeat padding-box', borderRadius: '6px', p: '10px',alignContent: 'center',  ml:'22px', mr:'22px',mt:1, cursor: 'pointer' }} onClick={()=> setValue(1)}>
+                    <Box sx={{display:'flex', flexDirection:'column', justifyContent:'space-between', gap:'10px', mt:'7px'}}>
+                    {(!value || value===1) && (<Box sx={{ height: '55px', background: '#FEEAEA80 0% 0% no-repeat padding-box', borderRadius: '6px', p: '10px',alignContent: 'center',  ml:'22px', mr:'22px', cursor: 'pointer' }} onClick={()=> setValue(1)}>
                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 <Box sx={{ font: 'normal normal bold 10px/14px Nunito Sans', color: '#FFFFFF', background: '#B3776D 0% 0% no-repeat padding-box', borderRadius: '50%', p: '4px', ml: '5px' }}>01</Box>
@@ -126,7 +127,7 @@ function PricingComponentPopup({ open, handleClose, value, setValue }) {
                     </Box>
                     )}
                     </Box>
-                    {value!==0 && <CustomizationPopup id={value} setValue={setValue} />}
+                    {value!==0 && <CustomizationPopup id={value} setValue={setValue} value={value} unit_id={id} />}
                 </Box>
                     
             </Modal>
