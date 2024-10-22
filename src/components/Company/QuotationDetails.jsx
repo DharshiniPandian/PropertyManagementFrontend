@@ -4,7 +4,7 @@ import React from 'react'
 function QuotationDetails() {
   return (
    <Box sx={{pl:'17px'}}>
-    <Typography sx={{font: 'normal normal bold 14px/19px Nunito Sans', letterSpacing: '0px', color: '#4E5A6B', mb:'12px', height:'100%'}}>Quotation Details</Typography>
+    <Typography sx={{font: 'normal normal bold 14px/19px Nunito Sans', letterSpacing: '0px', color: '#4E5A6B', mb:'12px', height:'90%'}}>Quotation Details</Typography>
     <Box sx={{display: 'flex', justifyContent: 'space-between', width:'351px'}}>
         <Box>
             <Typography sx={{font: 'normal normal 600 8px/11px Nunito Sans', color: '#98A0AC'}}>LEASE START DATE</Typography>

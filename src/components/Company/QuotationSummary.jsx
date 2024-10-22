@@ -28,7 +28,7 @@ function QuotationSummary() {
   ];
 
   return (
-    <Box sx={{ p: '17px', height: '88%' }}>
+    <Box sx={{ p: '17px', height: '87%' }}>
       <Typography sx={{ font: 'normal normal bold 14px/19px Nunito Sans', color: '#4E5A6B', mb: 2 }}>
         Quotation Summary
       </Typography>
