@@ -203,14 +203,17 @@ const QuoteSlice = createSlice({
         }
 
         state.total = overAllTotal(state.quoted_units);
+    },
+
+    reset(state, action) {
+       window.location.reload(true)
     }
-    
-    
+      
     }
     
     
 })
 
-export const {addAddon, addComponent, removeUnit, addDiscount, removeAddon, removeComponent} = QuoteSlice.actions;
+export const {addAddon, addComponent, removeUnit, addDiscount, removeAddon, removeComponent, reset} = QuoteSlice.actions;
 
 export const QuoteReducer = QuoteSlice.reducer;

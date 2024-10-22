@@ -58,8 +58,8 @@ function CustomizationPopup({ id, setValue, value, unit_id }) {
       pricing_id: value,
       revenue_id: activeRevenue,
       component_id: activeComponent,
-      discount_type: null,
-      discount_value: null,
+      discount_type: 'Value',
+      discount_value: 0,
       item_unit_price: value!==5 ? uom: unitPrice,
       quantity: quantity,
       chargeable: activeCharge

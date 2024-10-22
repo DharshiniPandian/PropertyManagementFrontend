@@ -124,7 +124,7 @@ function UnitCard() {
   }
   
   return (
-  <Box sx={{ overflowY: 'auto', height: '54vh', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none' } }}>
+  <Box sx={{ overflowY: 'auto', height: '57vh', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none' } }}>
       <Stack
   direction="row"
   useFlexGap
@@ -156,12 +156,12 @@ function UnitCard() {
         <Badge
           badgeContent={
             <RiDeleteBinLine
-            size='11px'
+            size='17px'
               style={{
                 color: "#FF4B4B",
                 backgroundColor: "#F5F7FA",
                 borderRadius: '50%',
-                padding:'4px'
+                padding:'5px'
               }}
               onClick={() => deleteUnit(unit)}
             />

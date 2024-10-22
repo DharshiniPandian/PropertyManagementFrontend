@@ -24,12 +24,12 @@ function BillPopup({ id, handleClose, val }) {
 
     useEffect(() => {
         calculateTotal();
-        setTotal(units.price + units.addonPrice + units.componentPrice);
-        setComponents(units.components);
-        setAddons(units.addons);
+        // setTotal(units.price + units.addonPrice + units.componentPrice);
+        
     }, [addons, components, unit_data, units]);
 
     const handleDiscountChangeAddon = (index, key, value) => {
+        debugger
         const parsedValue = key === 'discount_value' ? parseFloat(value) || 0 : value;
     
         console.log(`Addon ${index} - ${key}:`, parsedValue); 
@@ -41,13 +41,16 @@ function BillPopup({ id, handleClose, val }) {
             return addon;
         });
         setAddons(updatedAddons);
+        calculateTotal()
     };
     
 
     const handleDiscountChangeComponent = (index, key, value) => {
         const parsedValue = key === 'discount_value' ? parseFloat(value) || 0 : value;
         const updatedComponents = components.map((comp, i) => (i === index ? { ...comp, [key]: parsedValue } : comp));
+        debugger
         setComponents(updatedComponents);
+        calculateTotal()
       };
     
     const calculateTotal = () => {
@@ -66,7 +69,6 @@ function BillPopup({ id, handleClose, val }) {
         });
     
         components.forEach((comp) => {
-            console.log(comp)
             let price = (parseFloat(comp.item_unit_price) || 0) * (parseInt(comp.quantity) || 1);
             if (comp.discount_type === 'Value') {
                 price -= comp.discount_value ? parseFloat(comp.discount_value) : 0;
@@ -83,11 +85,15 @@ function BillPopup({ id, handleClose, val }) {
 
     const handleDeleteAddon = (addon) => {
         dispatch(removeAddon({ id, addon }));
+        setAddons(units.addons.filter((item) => ((item.amenity_id && item.amenity_id!==addon.amenity_id) || (item.utility_id && item.utility_id!==addon.utility_id))))
+        calculateTotal()
     };
 
     const handleDeleteComponent = (component) => {
         console.log(component)
         dispatch(removeComponent({ id, component }));
+        setComponents(units.components.filter((item) => item.pricing_id!==component.pricing_id))
+        calculateTotal()
     };
 
     const handleSave = () => {
@@ -107,7 +113,7 @@ function BillPopup({ id, handleClose, val }) {
             <Typography sx={{ font: 'normal normal bold 14px/19px Nunito Sans', color: '#091B29', mb: '10px', p: '10px' }}>
                 UNIT PRICING DETAILS
             </Typography>
-            <Box sx={{ p: '10px', flex: '1 1 auto', overflowY: 'auto' }}>
+            <Box sx={{ p: '10px', flex: '1 1 auto', overflowY: 'auto', scrollbarWidth: 'none' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', pt: '7px', pr:'7px', pl:'7px' }}>
                     <Typography sx={{ font: 'normal normal 600 14px/19px Nunito Sans', color: '#4E5A6B' }}>
                         Unit Price
@@ -137,12 +143,12 @@ function BillPopup({ id, handleClose, val }) {
                         </Box>
 
                         {val === 2 && (
-                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: '7px', width: '100%' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: '7px', width: '97%' }}>
                                 <Typography sx={{ font: 'italic normal normal 14px/19px Nunito Sans', color: '#98A0AC' }}>
                                     Discount
                                 </Typography>
                                 <Box>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', ml: 'auto', mr: '12px' }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', ml: 'auto', overflowY: 'hidden' }}>
                                         <FormControl sx={{ width: '70px' }} variant="outlined">
                                             <OutlinedInput
                                                 value={addon.discount_value || ''}
@@ -212,12 +218,12 @@ function BillPopup({ id, handleClose, val }) {
                         </Box>
 
                         {val === 2 && (
-                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: '7px', width: '100%' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: '7px', width: '97%' }}>
                                 <Typography sx={{ font: 'italic normal normal 14px/19px Nunito Sans', color: '#98A0AC' }}>
                                     Discount
                                 </Typography>
                                 <Box>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', ml: 'auto', mr: '12px' }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', ml: 'auto' }}>
                                         <FormControl sx={{ width: '70px' }} variant="outlined">
                                             <OutlinedInput
                                                 value={component.discount_value || ''}

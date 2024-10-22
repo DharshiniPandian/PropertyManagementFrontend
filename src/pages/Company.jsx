@@ -11,11 +11,14 @@ import Footer from '../components/Company/Footer';
 
 function Company() {
   return (
-    <Box sx={{ height: '90vh', display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
       <TopBar />
       <Box sx={{
-        p: '25px',
-        flexGrow: 1 
+        pt:'15px',
+        pr: '25px',
+        pb:'25px',
+        pl:'25px',
+        flexGrow: 1
       }}>
         <Stack sx={{
           width: '100%',
@@ -25,38 +28,39 @@ function Company() {
           borderRadius: '12px',
         }}>
           <Box sx={{ flex: 1 }}>
-          <Navigator />
-          <Divider
-                flexItem
-                sx={{
-                  borderColor: '#F5F7FA',
-                  borderWidth: '1px',
-                }}
-              />
-              </Box>
-          <Box  sx={{ display: 'flex', flexDirection: 'row', flex: 10 }}>
-          <Box sx={{flex: 1 }}> 
-          <ProspectProfile />
-              <QuotationDetails />
+            <Navigator />
+            <Divider
+              flexItem
+              sx={{
+                borderColor: '#F5F7FA',
+                borderWidth: '1px',
+              }}
+            />
           </Box>
-          <Box flex={2} sx={{backgroundColor:'#f6f8fa'}}> 
-          <UnitDetails />
+          <Box sx={{ display: 'flex', flexDirection: 'row', flex: 9 }}>
+            <Box sx={{ flex: 1 }}>
+              <ProspectProfile />
+              <QuotationDetails />
+            </Box>
+            <Box flex={2} sx={{ backgroundColor: '#f6f8fa' }}>
+              <UnitDetails />
             </Box>
 
-            <Box sx={{flex: 1 }}>  
-          <QuotationSummary />
+            <Box sx={{ flex: 1 }}>
+              <QuotationSummary />
             </Box>
 
-        </Box>
-        <Box sx={{ flexShrink: 0, mb:1 }} >
-        <Footer /></Box>
-      </Stack>
-        </Box>
+          </Box>
+          <Box sx={{ flexShrink: 0, mb: 1 }} >
+            <Footer />
+          </Box>
+        </Stack>
+      </Box>
 
 
-      </Box >
-      )
+    </Box >
+  )
 }
 
-      export default Company
+export default Company
 
