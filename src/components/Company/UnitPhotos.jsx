@@ -17,7 +17,7 @@ const images = [
     const maxVisibleImages = 4; 
   
     return (
-       <Box sx={{display:'flex', width:'100%', gap:'8px', mb:2}}>
+       <Box sx={{display:'flex', width:'125%', gap:'8px', mb:2}}>
           {images.length > 0 && (
             <Grid item xs={2}>
             <Card sx={{ borderRadius: '8px', width: '100%' }}>

@@ -9,8 +9,8 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Company from "./pages/Company.jsx";
 import { Provider } from "react-redux";
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
+const router = createBrowserRouter(   //uses the DOM History API to update the URL and manage the history stack
+  createRoutesFromElements( //createRoutesFromElements is a helper that creates route objects from <Route> elements. It's useful if you prefer to create your routes as JSX instead of objects.
     <Route path='/' element={<App />}>
       <Route path='dashboard' element={<Dashboard />} />
       <Route path='company' element={<Company />} >
