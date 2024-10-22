@@ -134,6 +134,12 @@ const QuoteSlice = createSlice({
               const componentExists = unit.components.some(
                 existingComponent => existingComponent.pricing_id === component.pricing_id
               );
+
+              if(componentExists){
+                unit.components = unit.components.map(item => 
+                    item.pricing_id===component.pricing_id ? component : item
+                )
+              }
               
               if (!componentExists) {
                 unit.components.push(component);
@@ -180,7 +186,7 @@ const QuoteSlice = createSlice({
         }
     
         state.total = overAllTotal(state.quoted_units);
-    },
+     },
 
     removeComponent(state, action) {
         const {id, component} = action.payload;

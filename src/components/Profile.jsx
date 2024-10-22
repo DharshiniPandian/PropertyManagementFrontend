@@ -98,7 +98,7 @@ export default function Profile() {
                     padding:'0px',
                     textTransform: 'none',
                     borderRadius: '0px', 
-                    cursor:'auto'
+                    cursor:'pointer'
                 }}
                 endIcon={
                     isHovered ? (

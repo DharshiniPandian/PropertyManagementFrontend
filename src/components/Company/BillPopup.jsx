@@ -29,7 +29,6 @@ function BillPopup({ id, handleClose, val }) {
     }, [addons, components, unit_data, units]);
 
     const handleDiscountChangeAddon = (index, key, value) => {
-        debugger
         const parsedValue = key === 'discount_value' ? parseFloat(value) || 0 : value;
     
         console.log(`Addon ${index} - ${key}:`, parsedValue); 
@@ -48,7 +47,6 @@ function BillPopup({ id, handleClose, val }) {
     const handleDiscountChangeComponent = (index, key, value) => {
         const parsedValue = key === 'discount_value' ? parseFloat(value) || 0 : value;
         const updatedComponents = components.map((comp, i) => (i === index ? { ...comp, [key]: parsedValue } : comp));
-        debugger
         setComponents(updatedComponents);
         calculateTotal()
       };
