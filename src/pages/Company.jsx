@@ -11,18 +11,18 @@ import Footer from '../components/Company/Footer';
 
 function Company() {
   return (
-    <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ height: '80vh', display: 'flex', flexDirection: 'column' }}>
       <TopBar />
       <Box sx={{
-        pt:'15px',
+        pt:'12px',
         pr: '25px',
-        pb:'25px',
+        pb:'7px',
         pl:'25px',
         flexGrow: 1
       }}>
         <Stack sx={{
           width: '100%',
-          height: '100%',
+          height: '92%',
           background: '#FFFFFF 0% 0% no-repeat padding-box',
           boxShadow: '0px 0px 16px #00000014',
           borderRadius: '12px',
@@ -37,7 +37,7 @@ function Company() {
               }}
             />
           </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'row', flex: 9 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'row', flex: 7 }}>
             <Box sx={{ flex: 1 }}>
               <ProspectProfile />
               <QuotationDetails />
@@ -51,7 +51,7 @@ function Company() {
             </Box>
 
           </Box>
-          <Box sx={{ flexShrink: 0, mb: 1 }} >
+          <Box sx={{ flexShrink: 0, mb: 1 , background:'white',borderRadius: '12px',}} >
             <Footer />
           </Box>
         </Stack>
