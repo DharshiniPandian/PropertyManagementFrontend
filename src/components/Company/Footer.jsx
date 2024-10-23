@@ -23,7 +23,7 @@ function Footer() {
     dispatch(reset())
   }
   return (
-    <Box sx={{ p: '17px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '40px' }}>
+    <Box sx={{ pt: '10px',pr:'15px', pl:'15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '40px', mb:'15px' }}>
       <Box>
         <Button variant='outline' sx={{ font: 'normal normal bold 14px/19px Nunito Sans', color: '#091B29', border: '1px solid #E4E8EE', borderRadius: '8px', textTransform: 'none', height: '40px' }}>Previous</Button>
       </Box>
